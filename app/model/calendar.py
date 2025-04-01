@@ -44,7 +44,7 @@ class Event:
 class Day:
     def __init__(self, date_: date) -> None:
         self.date_ = date_
-        self.slots: dict = {}
+        self.slots: dict[time, str | None] = {}
         self._init_slots()
 
     def _init_slots(self) -> None:
@@ -114,15 +114,6 @@ class Calendar:
             if event_id is None:
                 available_slots.append(slot)
         return available_slots
-
-    def delete_event(self, event_id: str):
-        deleted = False
-        for slot, saved_id in self.slots.items():
-            if saved_id == event_id:
-                self.slots[slot] = None
-                deleted = True
-        if not deleted:
-            event_not_found_error()
 
     def update_event(self, event_id: str, title: str, description: str, date_: date, start_at: time, end_at: time):
         event = self.events[event_id]
